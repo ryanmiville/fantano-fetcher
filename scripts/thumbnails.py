@@ -6,9 +6,9 @@ url = "https://www.youtube.com/c/theneedledrop"
 c = Channel(url)
 
 videos = (v for v in c.videos_generator() if v.title.endswith("ALBUM REVIEW"))
-thumbnails = (v.thumbnail_url for v in videos)
 
-for tn in thumbnails:
+for v in videos:
+    tn = v.thumbnail_url
     r = req.get(tn)
-    with open(f"{tn}.jpg", "wb") as f:
+    with open(f"{v.title}.jpg", "wb") as f:
         f.write(r.content)
