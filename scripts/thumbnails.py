@@ -1,15 +1,15 @@
 import scrapetube
-import itertools
+import requests
 
 videos = scrapetube.get_channel(channel_url="https://www.youtube.com/c/theneedledrop")
 videos = (v for v in videos if v["title"]["runs"][0]["text"].endswith("ALBUM REVIEW"))
-videos = itertools.islice(videos, 3)
 
 for v in videos:
-    print(v["title"]["runs"][0]["text"])
-    print(v["videoId"])
-    print(v["thumbnail"]["thumbnails"][0]["url"])
-    print()
+    id = v["videoId"]
+    tn = v["thumbnail"]["thumbnails"][0]["url"]
+    r = requests.get(tn)
+    with open(f"thumbnails/{id}.jpg", "wb") as f:
+        f.write(r.content)
 # for video in videos:
 #     print(video["videoId"])
 
