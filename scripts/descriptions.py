@@ -15,6 +15,9 @@ with open("descriptions.jsonl", "w") as f:
             "videoId": yt.video_id,
             "title": yt.title,
             "description": yt.description,
+            "thumbnailUrl": yt.thumbnail_url,
+            "publishDate": yt.publish_date.strftime("%Y-%m-%d"),
+            "watchUrl": yt.watch_url,
         }
         json.dump(vid, f)
         f.write("\n")
