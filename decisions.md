@@ -9,3 +9,11 @@ Before that I was using scrapetube to get the video IDs, but I couldn't get the 
 ### last fetch date
 
 4-25-2023
+
+### clean thumbnail data
+
+first pass
+
+| Yellow | Other |
+| ------ | ----- |
+|    241 |  2283 |

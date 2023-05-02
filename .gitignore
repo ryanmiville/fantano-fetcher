@@ -290,4 +290,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-scripts/thumbnails/*.jpg
+scripts/thumbnails/*
