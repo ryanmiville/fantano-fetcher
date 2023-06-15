@@ -291,4 +291,8 @@ dist
 .pnp.*
 
 scripts/thumbnails/*
-ml/data/*
+ml/data**/*
+ml/lightning_logs
+ml/*model
+ml/fast
+ml/model.pt
