@@ -290,9 +290,45 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-scripts/thumbnails/*
-ml/data**/*
-ml/lightning_logs
-ml/*model
-ml/fast
-ml/model.pt
+notebooks/thumbnails/*
+notebooks/data**/*
+notebooks/lightning_logs
+notebooks/*model
+notebooks/fast
+notebooks/model.pt
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
