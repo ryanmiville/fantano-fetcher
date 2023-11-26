@@ -7,10 +7,10 @@ import os
 
 load_dotenv()
 
-_host = os.getenv("DB_HOST")
-_user = os.getenv("DB_USERNAME")
-_passwd = os.getenv("DB_PASSWORD")
-_db = os.getenv("DB_NAME")
+_host = os.getenv("PLANETSCALE_DB_HOST")
+_user = os.getenv("PLANETSCALE_DB_USERNAME")
+_passwd = os.getenv("PLANETSCALE_DB_PASSWORD")
+_db = os.getenv("PLANETSCALE_DB")
 
 _con_str = f"mysql+mysqlconnector://{_user}:{_passwd}@{_host}/{_db}"
 
