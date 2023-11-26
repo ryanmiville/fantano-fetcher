@@ -2,7 +2,6 @@ import scrapetube
 from pytube import YouTube
 import re
 from datetime import date
-import pandas as pd
 
 
 def _description(full_html) -> str:
@@ -26,38 +25,26 @@ def _description(full_html) -> str:
     return desc
 
 
-def _parse_description(df) -> pd.DataFrame:
-    # Derive column 'derivedCol' from column: 'title'
-    # Transform "title" as per the following examples:
-    #   HMLTD - The Worm ALBUM REVIEW ==> HMLTD
-    #   Depeche Mode - Memento Mori ALBUM REVIEW ==> Depeche Mode
-    df.insert(2, "artist", df["title"].str.split(" -").str[0].str.strip())
-    # Derive column 'derivedCol' from column: 'title'
-    # Transform "title" as per the following examples:
-    #   HMLTD - The Worm ALBUM REVIEW ==> The Worm
-    #   Depeche Mode - Memento Mori ALBUM REVIEW ==> Memento Mori
-    df.insert(
-        3,
-        "album",
-        df["title"]
-        .str.split(" - ")
-        .str[1]
-        .str.strip()
-        .str.removesuffix(" ALBUM REVIEW"),
-    )
-    df.loc[:, "description"] = df["description"].str.replace("\\n", "\n")
-    # rename all columns to be snake_case
-    df = df.rename(
-        columns={
-            "videoId": "video_id",
-            "thumbnailUrl": "thumbnail_url",
-            "publishDate": "publish_date",
-            "watchUrl": "watch_url",
-        }
-    )
-    df["rating"] = df["description"].str.extract(r"\n(\d+)/10")
-    df["rating"] = pd.to_numeric(df["rating"])
-    return df
+def _parse_description(videos):
+    for video in videos:
+        # Derive 'artist' from 'title'
+        video["artist"] = video["title"].split(" -")[0].strip()
+
+        # Derive 'album' from 'title'
+        album_title = video["title"].split(" - ")[1].strip()
+        video["album"] = album_title.removesuffix(" ALBUM REVIEW")
+
+        # Replace '\\n' with '\n' in 'description'
+        video["description"] = video["description"].replace("\\n", "\n")
+
+        # Extract rating from description as an integer
+        rating_match = re.search(r"\n(\d+)/10", video["description"])
+        if rating_match:
+            video["rating"] = int(rating_match.group(1))
+        else:
+            video["rating"] = None
+
+    return videos
 
 
 def _get_videos_after(date: date):
@@ -73,16 +60,16 @@ def _get_videos_after(date: date):
                 break
             desc = _description(yt.watch_html)
             vid = {
-                "videoId": yt.video_id,
+                "video_id": yt.video_id,
                 "title": yt.title,
                 "description": desc,
-                "thumbnailUrl": yt.thumbnail_url,
-                "publishDate": publish_date,
-                "watchUrl": yt.watch_url,
+                "thumbnail_url": yt.thumbnail_url,
+                "publish_date": publish_date,
+                "watch_url": yt.watch_url,
             }
             yield vid
 
 
 def get_reviews_after(date: date):
-    df = pd.DataFrame(_get_videos_after(date))
-    return _parse_description(df)
+    videos = _get_videos_after(date)
+    return _parse_description(list(videos))

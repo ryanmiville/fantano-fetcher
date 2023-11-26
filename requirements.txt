@@ -1,6 +1,5 @@
 sqlalchemy
 mysql-connector-python
-pandas
 python-dotenv
 scrapetube
 pytube

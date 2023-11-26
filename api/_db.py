@@ -1,8 +1,7 @@
 from datetime import date
 from sqlalchemy import create_engine
-from sqlalchemy import text
+from sqlalchemy import text, Table, MetaData, insert
 from dotenv import load_dotenv
-import pandas as pd
 
 import os
 
@@ -25,7 +24,13 @@ def most_recent_publish_date() -> date:
         return results.fetchone()[0]
 
 
-def insert_reviews(df: pd.DataFrame):
-    df["yellow_flannel"] = df["yellow_flannel"].astype(int)
-    df["publish_date"] = pd.to_datetime(df["publish_date"])
-    df.to_sql("reviews", con=_engine, if_exists="append", index=False)
+def insert_reviews(reviews: list[dict]):
+    metadata = MetaData()
+    reviews_table = Table("reviews", metadata, autoload_with=_engine)
+
+    with _engine.connect() as connection:
+        for review in reviews:
+            # Convert boolean to int for 'yellow_flannel'
+            review["yellow_flannel"] = int(review["yellow_flannel"])
+            stmt = insert(reviews_table).values(review)
+            connection.execute(stmt)
