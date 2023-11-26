@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler
-from _db import most_recent_publish_date, insert_reviews
-from _yt import get_reviews_after
-from _hf import wearing_yellow_flannel
+from api._db import most_recent_publish_date, insert_reviews
+from api._yt import get_reviews_after
+from api._hf import wearing_yellow_flannel
 
 
 class handler(BaseHTTPRequestHandler):
