@@ -1,6 +1,6 @@
-sqlalchemy
-mysql-connector-python
-python-dotenv
-scrapetube
-pytube
-huggingface_hub
+huggingface-hub==0.19.4
+mysql-connector-python==8.2.0
+python-dotenv==1.0.0
+pytube==15.0.0
+scrapetube==2.5.1
+SQLAlchemy==2.0.23
