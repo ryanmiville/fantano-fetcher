@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 import api._db as db
 from api._yt import get_reviews_after
-from api._hf import wearing_yellow_flannel
 
 
 class handler(BaseHTTPRequestHandler):
@@ -10,7 +9,7 @@ class handler(BaseHTTPRequestHandler):
         reviews = get_reviews_after(most_recent)
 
         for review in reviews:
-            review["yellow_flannel"] = wearing_yellow_flannel(review["thumbnail_url"])
+            review["yellow_flannel"] = False
 
         db.insert_reviews(reviews)
         self.send_response(200)
