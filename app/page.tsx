@@ -7,7 +7,9 @@ export default function Home() {
         <h1>Fantano</h1>
         <h1>Fetcher</h1>
       </div>
-      <ReviewsTable />
+      <section className="max-w-screen-xl mx-auto">
+        <ReviewsTable />
+      </section>
     </main>
   );
 }
