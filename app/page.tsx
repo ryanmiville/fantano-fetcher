@@ -1,26 +1,13 @@
 import { Review, ReviewsTable } from "@/components/ReviewsTable";
 
-import { db, reviews } from "@/db";
-
-async function selectReviews() {
-  return (await db
-    .select({
-      artist: reviews.artist,
-      album: reviews.album,
-      rating: reviews.rating,
-      publishDate: reviews.publishDate,
-    })
-    .from(reviews)
-    .limit(25)) as Review[];
-}
+import { getReviews } from "@/db/queries";
 
 export default async function Home() {
-  const data = await selectReviews();
+  const data = (await getReviews()) as Review[];
   return (
     <main className="min-h-screen p-24">
-      <div className="flex flex-col items-center text-6xl lg:text-8xl font-extrabold pb-4">
-        <h1>Fantano</h1>
-        <h1>Fetcher</h1>
+      <div className="flex flex-col items-center text-6xl font-extrabold pb-4">
+        <h1>Fantano Fetcher</h1>
       </div>
       <section className="max-w-screen-xl mx-auto">
         <ReviewsTable reviews={data} />
