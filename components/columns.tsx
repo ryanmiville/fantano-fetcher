@@ -9,15 +9,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Review } from "@/db/schema";
 import { MoreHorizontal } from "lucide-react";
 import { DataTableColumnHeader } from "./data-table-column-header";
-
-export type Review = {
-  artist: string;
-  album: string;
-  rating: number | null;
-  publishDate: string;
-};
 
 export const ratings = [
   {

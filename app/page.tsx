@@ -1,9 +1,9 @@
 import { getReviews } from "@/db/queries";
-import { Review, columns } from "../components/columns";
+import { columns } from "../components/columns";
 import { DataTable } from "../components/data-table";
 
 export default async function Home() {
-  const data = (await getReviews()) as Review[];
+  const data = await getReviews();
   return (
     <main className="min-h-screen p-24">
       <div className="flex flex-col items-center text-6xl font-extrabold pb-4">
