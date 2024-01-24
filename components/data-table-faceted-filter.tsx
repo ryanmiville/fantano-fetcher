@@ -37,7 +37,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const selectedValues = new Set(column?.getFilterValue() as number[]);
 
   return (
     <Popover>
@@ -64,7 +64,9 @@ export function DataTableFacetedFilter<TData, TValue>({
                   </Badge>
                 ) : (
                   options
-                    .filter((option) => selectedValues.has(option.value))
+                    .filter((option) =>
+                      selectedValues.has(Number(option.value))
+                    )
                     .map((option) => (
                       <Badge
                         variant="secondary"
@@ -87,15 +89,15 @@ export function DataTableFacetedFilter<TData, TValue>({
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
+                const isSelected = selectedValues.has(Number(option.value));
                 return (
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.value);
+                        selectedValues.delete(Number(option.value));
                       } else {
-                        selectedValues.add(option.value);
+                        selectedValues.add(Number(option.value));
                       }
                       const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(

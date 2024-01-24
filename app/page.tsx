@@ -1,6 +1,6 @@
-import { Review, ReviewsTable } from "@/components/ReviewsTable";
-
 import { getReviews } from "@/db/queries";
+import { Review, columns } from "../components/columns";
+import { DataTable } from "../components/data-table";
 
 export default async function Home() {
   const data = (await getReviews()) as Review[];
@@ -10,7 +10,7 @@ export default async function Home() {
         <h1>Fantano Fetcher</h1>
       </div>
       <section className="max-w-screen-xl mx-auto">
-        <ReviewsTable reviews={data} />
+        <DataTable data={data} columns={columns} />
       </section>
     </main>
   );
