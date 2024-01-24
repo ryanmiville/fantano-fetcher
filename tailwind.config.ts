@@ -57,6 +57,12 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      dropShadow: {
+        "brutal-sm": "0.125rem 0.125rem #000",
+        brutal: "0.25rem 0.25rem #000",
+        "brutal-md": "0.5rem 0.5rem #000",
+        "brutal-lg": "1rem 1rem #000",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

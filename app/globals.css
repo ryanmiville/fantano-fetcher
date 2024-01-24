@@ -30,11 +30,11 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
+    --border: black;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
  
-    --radius: 0.5rem;
+    --radius: 0.1rem;
   }
 }
  
