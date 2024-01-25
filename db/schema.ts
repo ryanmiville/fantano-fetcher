@@ -23,7 +23,7 @@ export const reviews = mysqlTable(
     publishDate: date("publish_date", { mode: "string" }).notNull(),
     watchUrl: varchar("watch_url", { length: 255 }).notNull(),
     yellowFlannel: tinyint("yellow_flannel"),
-    rating: int("rating"),
+    rating: varchar("rating", { length: 255 }),
   },
   (table) => {
     return {

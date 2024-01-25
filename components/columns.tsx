@@ -16,44 +16,41 @@ import { DataTableColumnHeader } from "./data-table-column-header";
 
 export const ratings = [
   {
-    value: 10,
-    label: "10",
+    value: "classic",
+    label: "Classic",
   },
   {
-    value: 9,
-    label: "9",
+    value: "10",
   },
   {
-    value: 8,
-    label: "8",
+    value: "9",
   },
   {
-    value: 7,
-    label: "7",
+    value: "8",
   },
   {
-    value: 6,
-    label: "6",
+    value: "7",
   },
   {
-    value: 5,
-    label: "5",
+    value: "6",
   },
   {
-    value: 4,
-    label: "4",
+    value: "5",
   },
   {
-    value: 3,
-    label: "3",
+    value: "4",
   },
   {
-    value: 2,
-    label: "2",
+    value: "3",
   },
   {
-    value: 1,
-    label: "1",
+    value: "2",
+  },
+  {
+    value: "1",
+  },
+  {
+    value: "0",
   },
 ];
 
@@ -99,8 +96,8 @@ export const columns: ColumnDef<ReviewColumn>[] = [
     cell: ({ row }) => {
       const rating = row.getValue("rating") ?? "---";
       return (
-        <div className="flex w-[100px] items-center">
-          <span>{rating as string}</span>
+        <div className="flex w-[100px] items-center capitalize">
+          <span>{rating}</span>
         </div>
       );
     },

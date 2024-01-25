@@ -34,10 +34,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("rating")}
             title="Rating"
-            options={ratings.map((rating) => ({
-              label: rating.label,
-              value: rating.value.toString(),
-            }))}
+            options={ratings}
           />
         )}
         {isFiltered && (
