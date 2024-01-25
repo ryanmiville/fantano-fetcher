@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Karla } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
-const karla = Karla({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fantano Fetcher",
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={karla.className}>{children}</body>
+      <body className={outfit.className}>{children}</body>
     </html>
   );
 }
