@@ -94,7 +94,7 @@ export const columns: ColumnDef<ReviewColumn>[] = [
       <DataTableColumnHeader column={column} title="Rating" />
     ),
     cell: ({ row }) => {
-      const rating = row.getValue("rating") ?? "---";
+      const rating: string = row.getValue("rating") ?? "---";
       return (
         <div className="flex w-[100px] items-center capitalize">
           <span>{rating}</span>
