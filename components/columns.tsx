@@ -144,9 +144,9 @@ export const columns: ColumnDef<ReviewColumn>[] = [
             <iframe
               className="aspect-video w-full h-full"
               src={`https://www.youtube.com/embed/${review.videoId}`}
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
             ></iframe>
           </DialogContent>
         </Dialog>
