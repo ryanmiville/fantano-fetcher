@@ -8,10 +8,10 @@ export default async function Home() {
   return (
     <main className="min-h-screen">
       <MainNav />
-      <div className="p-24">
-        <section className="max-w-screen-xl mx-auto pt-16">
+      <div className="px-8 max-w-screen-xl mx-auto flex flex-col justify-center h-[calc(100vh-96px)]">
+        <div>
           <DataTable data={data} columns={columns} />
-        </section>
+        </div>
       </div>
     </main>
   );
