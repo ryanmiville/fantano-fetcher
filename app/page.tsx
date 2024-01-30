@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen">
       <MainNav />
-      <div className="px-8 max-w-screen-xl mx-auto flex flex-col justify-center h-[calc(100vh-96px)]">
+      <div className="px-8 pt-20 max-w-screen-xl mx-auto">
         <div>
           <DataTable data={data} columns={columns} />
         </div>
