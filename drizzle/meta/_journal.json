@@ -15,6 +15,13 @@
       "when": 1706201190896,
       "tag": "0001_dashing_blue_marvel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706626457090,
+      "tag": "0002_tense_maginty",
+      "breakpoints": true
     }
   ]
 }

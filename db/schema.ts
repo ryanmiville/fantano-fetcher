@@ -1,5 +1,6 @@
 import {
   date,
+  index,
   int,
   mysqlTable,
   primaryKey,
@@ -29,6 +30,7 @@ export const reviews = mysqlTable(
     return {
       reviewsId: primaryKey({ columns: [table.id], name: "reviews_id" }),
       videoId: unique("video_id").on(table.videoId),
+      publishDateIdx: index("publish_date_idx").on(table.publishDate),
     };
   }
 );
