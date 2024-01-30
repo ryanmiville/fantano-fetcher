@@ -27,7 +27,7 @@ import {
 
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -69,6 +69,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Album Reviews</CardTitle>
+      </CardHeader>
       <CardContent className="p-8">
         <div className="space-y-4">
           <DataTableToolbar table={table} />
