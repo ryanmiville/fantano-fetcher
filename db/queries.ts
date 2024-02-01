@@ -15,11 +15,5 @@ const prepared = db
   .prepare();
 
 export const getReviews = cache(async () => {
-  try {
-    return await prepared.execute();
-  } catch (error) {
-    // Handle the error here
-    console.error(error);
-    throw error;
-  }
+  return await prepared.execute();
 });

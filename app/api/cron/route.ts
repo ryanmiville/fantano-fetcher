@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -7,7 +6,6 @@ export async function GET(request: NextRequest) {
     return new Response("Unauthorized", { status: 401 });
   }
   await fireAndForgetUpdateReviews();
-  revalidatePath("/");
   return Response.json({ success: true });
 }
 
