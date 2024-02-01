@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 async function fireAndForgetUpdateReviews() {
   fetch("https://ryanmiville-fantano-fetcher.hf.space/update", {
     method: "POST",
-    next: { revalidate: 43200 }, // cache for 12 hours
+    cache: "no-store",
   });
   // wait 1 second to make sure the fetch request is sent
   await new Promise((resolve) => setTimeout(resolve, 1000));
