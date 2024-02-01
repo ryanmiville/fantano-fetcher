@@ -1,9 +1,7 @@
+import { revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { unstable_useCacheRefresh } from "react";
 
 export const runtime = "edge";
-
-const refreshCache = unstable_useCacheRefresh();
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
@@ -24,6 +22,6 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  refreshCache();
+  revalidateTag("reviews");
   return Response.json({ success: true });
 }

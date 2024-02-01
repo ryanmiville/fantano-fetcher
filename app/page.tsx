@@ -3,8 +3,6 @@ import { DataTable } from "@/components/data-table";
 import { MainNav } from "@/components/nav-bar";
 import { getReviews } from "@/db/queries";
 
-export const revalidate = 43200; // 12 hours
-
 export default async function Home() {
   const data = (await getReviews()) as ReviewColumn[];
   return (

@@ -1,5 +1,6 @@
 import { desc } from "drizzle-orm";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
+
 import { db, reviews } from ".";
 
 const prepared = db
@@ -14,6 +15,10 @@ const prepared = db
   .orderBy(desc(reviews.publishDate))
   .prepare();
 
-export const getReviews = cache(async () => {
-  return await prepared.execute();
-});
+export const getReviews = unstable_cache(
+  async () => {
+    return await prepared.execute();
+  },
+  ["reviews"],
+  { tags: ["reviews"] }
+);
