@@ -1,19 +1,29 @@
 import type { NextRequest } from "next/server";
+import { unstable_useCacheRefresh } from "react";
+
+export const runtime = "edge";
+
+const refreshCache = unstable_useCacheRefresh();
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 });
   }
-  await fireAndForgetUpdateReviews();
-  return Response.json({ success: true });
-}
 
-async function fireAndForgetUpdateReviews() {
-  fetch("https://ryanmiville-fantano-fetcher.hf.space/update", {
-    method: "POST",
-    cache: "no-store",
-  });
-  // wait 1 second to make sure the fetch request is sent
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const resp = await fetch(
+    "https://ryanmiville-fantano-fetcher.hf.space/update",
+    {
+      method: "POST",
+      cache: "no-store",
+    }
+  );
+  if (!resp.ok) {
+    return new Response("Failed to update data", {
+      status: resp.status,
+    });
+  }
+
+  refreshCache();
+  return Response.json({ success: true });
 }
