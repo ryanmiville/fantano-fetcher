@@ -36,3 +36,4 @@ export const reviews = mysqlTable(
 );
 
 export type Review = typeof reviews.$inferSelect;
+export type InsertReview = typeof reviews.$inferInsert;
