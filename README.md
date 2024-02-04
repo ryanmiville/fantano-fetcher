@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fantano Fetcher
 
-## Getting Started
+Simple Next.js app to fetch and display Anthony Fantano's latest reviews from his YouTube channel.
 
-First, run the development server:
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This should allow you to open the project and explore the code. However, you will need to set up a database to run the app, which is probably more trouble than it's worth. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This app uses PlanetScale for its database, even in dev mode. If you want to run this app locally, you will need to create a PlanetScale account and a database. Once you have a database, you will need to create a `.env.local` file in the root of the project and add the following environment variables:
 
-## Learn More
+```
+DATABASE_URL
+```
 
-To learn more about Next.js, take a look at the following resources:
+Then you can run `pnpm push` to run the necessary migrations to your database.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After your table is created, add the following environment variables to your `.env.local` file:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+PLANETSCALE_DB_HOST
+PLANETSCALE_DB_USERNAME
+PLANETSCALE_DB_PASSWORD
+```
 
-## Deploy on Vercel
+Even after this, you will want to seed some data. Even though this app fetches data and stores it in the database, it was designed for incremental updates. To seed the database, run the following command:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm seed
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Run the app
+
+Now you should finally be able to run the app:
+
+```bash
+pnpm dev
+```
