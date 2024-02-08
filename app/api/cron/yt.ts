@@ -5,28 +5,36 @@ const channelId = "UCt7fwAhXDy3oNFTAzF2o8Pw";
 
 const fmtDate = (date: string) => new Date(date).toISOString().split("T")[0];
 
-export async function getReviewsAfter(date: string) {
+export async function getReviews() {
   const channel = await yt.getChannel(channelId);
-  if (!channel) {
-    return null;
+  const reviews = reviewsGen(channel!.videos);
+  return new Reviews(reviews);
+}
+
+export async function getReviewsAfter(date: string) {
+  const reviews = (await getReviews()).until(
+    (review) => fmtDate(review.publishDate) <= date
+  );
+  const newReviews: InsertReview[] = [];
+  for await (const review of reviews) {
+    newReviews.push(review);
   }
-  const videos = videoGen(channel.videos);
-  let reviews: InsertReview[] = [];
+  return newReviews;
+}
+
+async function* reviewsGen(channelVideos: ChannelVideos) {
+  const videos = channelVideosGen(channelVideos);
   for await (const v of videos) {
     if (!v.title.endsWith("ALBUM REVIEW")) {
       continue;
     }
     const video = await v.getVideo();
-    if (fmtDate(video.uploadDate) <= date) {
-      break;
-    }
     const review = await makeReview(video);
-    reviews.push(review);
+    yield review;
   }
-  return reviews;
 }
 
-async function* videoGen(channelVideos: ChannelVideos) {
+async function* channelVideosGen(channelVideos: ChannelVideos) {
   while (true) {
     const videos = await channelVideos.next(5);
     yield* videos;
@@ -57,4 +65,30 @@ async function makeReview(video: Video | LiveVideo) {
     yellowFlannel: 0,
     rating,
   };
+}
+
+export class Reviews {
+  constructor(private reviews: AsyncGenerator<InsertReview>) {}
+
+  async *until(
+    predicate: (value: InsertReview) => boolean
+  ): AsyncGenerator<InsertReview> {
+    for await (let value of this.reviews) {
+      if (predicate(value)) {
+        break;
+      }
+      yield value;
+    }
+  }
+
+  async take(n: number) {
+    const reviews: InsertReview[] = [];
+    for await (let review of this.reviews) {
+      if (n-- === 0) {
+        break;
+      }
+      reviews.push(review);
+    }
+    return reviews;
+  }
 }
