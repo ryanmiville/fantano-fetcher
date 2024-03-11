@@ -1,26 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1705701304436,
-      "tag": "0000_funny_marten_broadcloak",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1706201190896,
-      "tag": "0001_dashing_blue_marvel",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1706626457090,
-      "tag": "0002_tense_maginty",
+      "when": 1710117886225,
+      "tag": "0000_goofy_albert_cleary",
       "breakpoints": true
     }
   ]

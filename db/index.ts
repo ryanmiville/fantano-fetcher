@@ -1,11 +1,8 @@
-import { connect } from "@planetscale/database";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
-
-const connection = connect({
-  host: process.env.PLANETSCALE_DB_HOST,
-  username: process.env.PLANETSCALE_DB_USERNAME,
-  password: process.env.PLANETSCALE_DB_PASSWORD,
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
+const client = createClient({
+  url: process.env.DATABASE_URL as string,
+  authToken: process.env.DATABASE_AUTH_TOKEN,
 });
-
-export const db = drizzle(connection);
+export const db = drizzle(client);
 export { reviews } from "./schema";

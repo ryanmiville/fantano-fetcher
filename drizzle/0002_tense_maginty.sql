@@ -1,1 +1,0 @@
-CREATE INDEX `publish_date_idx` ON `reviews` (`publish_date`);

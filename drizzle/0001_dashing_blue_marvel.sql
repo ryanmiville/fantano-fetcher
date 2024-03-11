@@ -1,1 +1,0 @@
-ALTER TABLE `reviews` MODIFY COLUMN `rating` varchar(255);

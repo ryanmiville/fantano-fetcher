@@ -7,13 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:introspect": "drizzle-kit introspect:mysql",
-    "db:generate": "drizzle-kit generate:mysql",
-    "db:push": "drizzle-kit push:mysql",
-    "db:seed": "tsx db/seed.ts"
+    "db:introspect": "drizzle-kit introspect:sqlite",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite"
   },
   "dependencies": {
-    "@planetscale/database": "^1.14.0",
+    "@libsql/client": "^0.5.3",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -29,7 +28,6 @@
     "cmdk": "^0.2.0",
     "drizzle-orm": "^0.29.3",
     "lucide-react": "^0.312.0",
-    "mysql2": "^3.7.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",

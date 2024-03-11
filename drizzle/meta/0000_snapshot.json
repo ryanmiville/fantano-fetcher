@@ -2,7 +2,7 @@
   "id": "00000000-0000-0000-0000-000000000000",
   "prevId": "",
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "sqlite",
   "tables": {
     "reviews": {
       "name": "reviews",
@@ -10,35 +10,35 @@
         "id": {
           "autoincrement": true,
           "name": "id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": false
         },
         "video_id": {
           "autoincrement": false,
           "name": "video_id",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "title": {
           "autoincrement": false,
           "name": "title",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "artist": {
           "autoincrement": false,
           "name": "artist",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "album": {
           "autoincrement": false,
           "name": "album",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -52,60 +52,48 @@
         "thumbnail_url": {
           "autoincrement": false,
           "name": "thumbnail_url",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "publish_date": {
           "autoincrement": false,
           "name": "publish_date",
-          "type": "date",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "watch_url": {
           "autoincrement": false,
           "name": "watch_url",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "yellow_flannel": {
+          "default": "(NULL)",
           "autoincrement": false,
           "name": "yellow_flannel",
-          "type": "tinyint",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
         "rating": {
+          "default": "(NULL)",
           "autoincrement": false,
           "name": "rating",
-          "type": "int",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         }
       },
-      "compositePrimaryKeys": {
-        "reviews_id": {
-          "name": "reviews_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "indexes": {},
       "foreignKeys": {},
-      "uniqueConstraints": {
-        "video_id": {
-          "name": "video_id",
-          "columns": [
-            "video_id"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     }
   },
-  "schemas": {},
+  "enums": {},
   "_meta": {
     "schemas": {},
     "tables": {},
