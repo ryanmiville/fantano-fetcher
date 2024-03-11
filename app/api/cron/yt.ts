@@ -3,27 +3,17 @@ import { ChannelVideos, Client, LiveVideo, Video } from "youtubei";
 const yt = new Client();
 const channelId = "UCt7fwAhXDy3oNFTAzF2o8Pw";
 
-const fmtDate = (date: string) => new Date(date).toISOString().split("T")[0];
+export const fmtDate = (date: string) =>
+  new Date(date).toISOString().split("T")[0];
 
 export async function getReviews() {
   const channel = await yt.getChannel(channelId);
-  const reviews = reviewsGen(channel!.videos);
+  const reviews = _getReviews(channel!.videos);
   return new Reviews(reviews);
 }
 
-export async function getReviewsAfter(date: string) {
-  const reviews = (await getReviews()).until(
-    (review) => fmtDate(review.publishDate) <= date
-  );
-  const newReviews: InsertReview[] = [];
-  for await (const review of reviews) {
-    newReviews.push(review);
-  }
-  return newReviews;
-}
-
-async function* reviewsGen(channelVideos: ChannelVideos) {
-  const videos = channelVideosGen(channelVideos);
+async function* _getReviews(channelVideos: ChannelVideos) {
+  const videos = getChannelVideos(channelVideos);
   for await (const v of videos) {
     if (!v.title.endsWith("ALBUM REVIEW")) {
       continue;
@@ -34,7 +24,7 @@ async function* reviewsGen(channelVideos: ChannelVideos) {
   }
 }
 
-async function* channelVideosGen(channelVideos: ChannelVideos) {
+async function* getChannelVideos(channelVideos: ChannelVideos) {
   while (true) {
     const videos = await channelVideos.next(5);
     yield* videos;
@@ -70,7 +60,19 @@ async function makeReview(video: Video | LiveVideo) {
 export class Reviews {
   constructor(private reviews: AsyncGenerator<InsertReview>) {}
 
-  async *until(
+  async until(predicate: (value: InsertReview) => boolean) {
+    return new Reviews(this._until(predicate));
+  }
+
+  async collect() {
+    const newReviews: InsertReview[] = [];
+    for await (const review of this.reviews) {
+      newReviews.push(review);
+    }
+    return newReviews;
+  }
+
+  private async *_until(
     predicate: (value: InsertReview) => boolean
   ): AsyncGenerator<InsertReview> {
     for await (let value of this.reviews) {
@@ -79,16 +81,5 @@ export class Reviews {
       }
       yield value;
     }
-  }
-
-  async take(n: number) {
-    const reviews: InsertReview[] = [];
-    for await (let review of this.reviews) {
-      if (n-- === 0) {
-        break;
-      }
-      reviews.push(review);
-    }
-    return reviews;
   }
 }
