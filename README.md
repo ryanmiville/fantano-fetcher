@@ -2,26 +2,21 @@
 
 Simple Next.js app to fetch and display Anthony Fantano's latest reviews from his YouTube channel.
 
-## Setup
-
-Ensure you have a `.env.local` file in the root of the project with the following environment variables:
-
-```
-DATABASE_URL='file:fantano.db'
-```
-
-Then run 
+## Getting started
 
 ```bash
 pnpm install
-```
-
-## Run the app
-
-Now you should be able to run the app:
-
-```bash
 pnpm dev
 ```
 
-> Note: fantano.db is not kept up to date, but it does have plenty of data for development purposes
+> Note: The included SQLite database, fantano.db, is not kept up to date. It has more than enough data for development purposes.
+
+## Technologies
+
+* Next.js 14
+* React server components
+* shadcn/ui
+* Tailwind CSS
+* Drizzle
+* Turso
+* Vercel
