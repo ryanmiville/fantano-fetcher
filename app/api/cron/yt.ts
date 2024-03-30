@@ -3,7 +3,6 @@ import { google, youtube_v3 } from "googleapis";
 
 const playlistId = "UUt7fwAhXDy3oNFTAzF2o8Pw";
 
-// Initialize the YouTube API client
 const youtube = google.youtube({
   version: "v3",
   auth: process.env.YOUTUBE_API_KEY,
@@ -36,10 +35,12 @@ async function* getPlaylistVideosGenerator(playlistId: string) {
 }
 
 function makeReview(video: youtube_v3.Schema$PlaylistItem) {
-  const { id, snippet } = video;
-  const { title, description, thumbnails, publishedAt } = snippet!;
+  const { snippet } = video;
+
+  const { title, description, thumbnails, publishedAt, resourceId } = snippet!;
+  const videoId = resourceId?.videoId!;
   const thumbnailUrl = thumbnails?.high?.url;
-  const publishDate = publishedAt;
+  const publishDate = fmtDate(publishedAt as string);
   console.log(title);
   const artist = title!.split(" - ")[0].trim();
   const albumTitle = title!.split(" - ")[1].trim();
@@ -50,14 +51,14 @@ function makeReview(video: youtube_v3.Schema$PlaylistItem) {
   const classicMatch = description?.match(/classic\/10/i);
   const rating = ratingMatch ? ratingMatch[1] : classicMatch ? "classic" : null;
   return {
-    videoId: id!,
+    videoId,
     title: title!,
     artist: artist!,
     album,
     description: description!,
     thumbnailUrl: thumbnailUrl!,
     publishDate: publishDate!,
-    watchUrl: `https://www.youtube.com/watch?v=${id}`,
+    watchUrl: `https://www.youtube.com/watch?v=${videoId}`,
     yellowFlannel: 0,
     rating,
   };
