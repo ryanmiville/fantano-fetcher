@@ -3,7 +3,7 @@ import { revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 import { fmtDate, getReviews } from "./yt";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
