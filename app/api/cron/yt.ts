@@ -1,56 +1,62 @@
 import { InsertReview } from "@/db/schema";
-import { ChannelVideos, Client, LiveVideo, Video } from "youtubei";
-const yt = new Client();
-const channelId = "UCt7fwAhXDy3oNFTAzF2o8Pw";
+import { google, youtube_v3 } from "googleapis";
+
+const playlistId = "UUt7fwAhXDy3oNFTAzF2o8Pw";
+
+// Initialize the YouTube API client
+const youtube = google.youtube({
+  version: "v3",
+  auth: process.env.YOUTUBE_API_KEY,
+});
 
 export const fmtDate = (date: string) =>
   new Date(date).toISOString().split("T")[0];
 
 export async function getReviews() {
-  const channel = await yt.getChannel(channelId);
-  const reviews = _getReviews(channel!.videos);
+  const reviews = getPlaylistVideosGenerator(playlistId);
   return new Reviews(reviews);
 }
 
-async function* _getReviews(channelVideos: ChannelVideos) {
-  const videos = getChannelVideos(channelVideos);
-  for await (const v of videos) {
-    if (!v.title.endsWith("ALBUM REVIEW")) {
-      continue;
-    }
-    const video = await v.getVideo();
-    const review = await makeReview(video);
-    yield review;
-  }
+async function* getPlaylistVideosGenerator(playlistId: string) {
+  let pageToken = "";
+  do {
+    const response = await youtube.playlistItems.list({
+      playlistId: playlistId,
+      maxResults: 5,
+      part: ["snippet"],
+      pageToken,
+    });
+    pageToken = response.data.nextPageToken as string;
+    const items = response.data.items || [];
+    const albumReviews = items.filter((item) =>
+      item.snippet?.title?.endsWith("ALBUM REVIEW")
+    );
+    yield* albumReviews.map(makeReview);
+  } while (pageToken);
 }
 
-async function* getChannelVideos(channelVideos: ChannelVideos) {
-  while (true) {
-    const videos = await channelVideos.next(5);
-    yield* videos;
-  }
-}
-
-async function makeReview(video: Video | LiveVideo) {
-  const { id, title, description, thumbnails, uploadDate } = video;
-  const thumbnailUrl = thumbnails.best!;
-  const publishDate = fmtDate(uploadDate);
-  const artist = title.split(" - ")[0].trim();
-  const albumTitle = title.split(" - ")[1].trim();
+function makeReview(video: youtube_v3.Schema$PlaylistItem) {
+  const { id, snippet } = video;
+  const { title, description, thumbnails, publishedAt } = snippet!;
+  const thumbnailUrl = thumbnails?.high?.url;
+  const publishDate = publishedAt;
+  console.log(title);
+  const artist = title!.split(" - ")[0].trim();
+  const albumTitle = title!.split(" - ")[1].trim();
   const album = albumTitle.endsWith(" ALBUM REVIEW")
     ? albumTitle.slice(0, -" ALBUM REVIEW".length)
     : albumTitle;
-  const ratingMatch = description.match(/\n(\d+)\/10/);
-  const classicMatch = description.match(/classic\/10/i);
+  const ratingMatch = description?.match(/\n(\d+)\/10/);
+  const classicMatch = description?.match(/classic\/10/i);
   const rating = ratingMatch ? ratingMatch[1] : classicMatch ? "classic" : null;
   return {
-    videoId: id,
-    title,
-    artist,
+    videoId: id!,
+    title: title!,
+    artist: artist!,
     album,
-    description,
-    thumbnailUrl,
-    publishDate,
+    description: description!,
+    thumbnailUrl: thumbnailUrl!,
+    publishDate: publishDate!,
     watchUrl: `https://www.youtube.com/watch?v=${id}`,
     yellowFlannel: 0,
     rating,
