@@ -9,7 +9,8 @@
     "lint": "next lint",
     "db:introspect": "drizzle-kit introspect:sqlite",
     "db:generate": "drizzle-kit generate:sqlite",
-    "db:push": "drizzle-kit push:sqlite"
+    "db:push": "drizzle-kit push:sqlite",
+    "localenv": "echo \"DATABASE_URL='file:fantano.db'\nYOUTUBE_API_KEY=''\" > .env.local"
   },
   "dependencies": {
     "@libsql/client": "^0.5.3",

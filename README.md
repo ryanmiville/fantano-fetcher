@@ -6,6 +6,7 @@ Simple Next.js app to fetch and display Anthony Fantano's latest reviews from hi
 
 ```bash
 pnpm install
+pnpm localenv
 pnpm dev
 ```
 
