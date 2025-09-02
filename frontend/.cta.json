@@ -1,11 +1,15 @@
 {
   "projectName": "frontend",
-  "mode": "code-router",
-  "typescript": false,
-  "tailwind": false,
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
   "packageManager": "bun",
-  "git": true,
+  "git": false,
   "version": 1,
   "framework": "react-cra",
-  "chosenAddOns": []
+  "chosenAddOns": [
+    "shadcn",
+    "table",
+    "tanstack-query"
+  ]
 }

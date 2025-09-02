@@ -1,4 +1,13 @@
 {
+  "name": "fantano-fetcher",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "bun run --filter frontend dev"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   }
